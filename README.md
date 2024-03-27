@@ -1,4 +1,4 @@
-# movie_ui
+![image](https://github.com/Wahyu-Sedana/MovieApp/assets/69441310/1a310b83-4467-4b9f-9160-853b8302540f)# movie_ui
 
 A new Flutter project.
 
@@ -15,4 +15,4 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 <br>
-<img src="https://github.com/Wahyu-Sedana/MovieApp/assets/69441310/dc8ed9b4-c470-48ce-b90c-00405cc7f33a" alt="drawing" style="width:200px;"/>
+<img src="https://github.com/Wahyu-Sedana/MovieApp/assets/69441310/19889753-714e-4c00-a26d-acfe1b11b675" alt="drawing" style="width:200px;"/>
