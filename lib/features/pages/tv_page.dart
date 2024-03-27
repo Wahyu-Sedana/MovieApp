@@ -4,9 +4,11 @@ import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 
-import '../models/movie_models.dart';
+import '../../src/models/movie_models.dart';
 
-class MovieListView extends StatelessWidget {
+class TvListPage extends StatelessWidget {
+  const TvListPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Consumer<HomeProvider>(
