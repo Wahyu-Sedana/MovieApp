@@ -1,4 +1,4 @@
-![image](https://github.com/Wahyu-Sedana/MovieApp/assets/69441310/1a310b83-4467-4b9f-9160-853b8302540f)# movie_ui
+# movie_ui
 
 A new Flutter project.
 
