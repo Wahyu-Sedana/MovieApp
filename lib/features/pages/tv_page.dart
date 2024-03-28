@@ -50,15 +50,14 @@ class TvPage extends StatelessWidget {
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                             overflow: TextOverflow.ellipsis),
-                        textAlign: TextAlign.center, // Atur textAlign menjadi center
+                        textAlign: TextAlign.center,
                       ),
                     ),
                     SizedBox(
                       height: 15,
                     ),
                     Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment.center, // Atur mainAxisAlignment menjadi center
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Column(
                           children: [
