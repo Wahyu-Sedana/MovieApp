@@ -1,136 +1,120 @@
 import 'package:flutter/material.dart';
-import 'package:movie_ui/src/providers/home_provider.dart';
+import 'package:movie_ui/src/models/tv_models.dart';
+import 'package:movie_ui/src/providers/tv_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:scroll_snap_list/scroll_snap_list.dart';
 
-import '../../src/models/movie_models.dart';
-
-class TvListPage extends StatelessWidget {
-  const TvListPage({super.key});
+class TvPage extends StatelessWidget {
+  const TvPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeProvider>(
-      builder: (context, movieProvider, child) {
-        return FutureBuilder<List<Movie>>(
-          future: movieProvider.fetchMovies(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
-            } else {
-              final List<Movie> movies = snapshot.data!;
-              return Center(
-                child: SizedBox(
-                  child: ScrollSnapList(
-                    itemBuilder: (context, index) {
-                      final movie = movies[index];
-                      return Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: Column(
+    return Consumer<TvProvider>(
+      builder: (context, tvProvider, child) {
+        if (!tvProvider.isFetched) {
+          if (tvProvider.isLoading) {
+            return Center(child: CircularProgressIndicator());
+          } else {
+            tvProvider.fetchTvProv();
+            return SizedBox.shrink();
+          }
+        } else {
+          final List<TV> tvs = tvProvider.tv;
+          return SizedBox(
+            child: PageView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: tvs.length,
+              controller: PageController(viewportFraction: 0.8),
+              itemBuilder: (context, index) {
+                final TV tvx = tvs[index];
+                return Column(
+                  children: [
+                    AnimatedPadding(
+                      padding: EdgeInsets.all(8.0),
+                      curve: Curves.fastOutSlowIn,
+                      duration: Duration(milliseconds: 400),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        child: Image.network(
+                          'https://image.tmdb.org/t/p/w500/${tvx.posterPath}',
+                          alignment: Alignment.topCenter,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Center(
+                      // Tambahkan Center di sini
+                      child: Text(
+                        tvx.title,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            overflow: TextOverflow.ellipsis),
+                        textAlign: TextAlign.center, // Atur textAlign menjadi center
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      mainAxisAlignment:
+                          MainAxisAlignment.center, // Atur mainAxisAlignment menjadi center
+                      children: [
+                        Column(
                           children: [
-                            Container(
-                              width: 300,
-                              height: 450,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black87.withOpacity(0.2),
-                                    spreadRadius: 2,
-                                    blurRadius: 10,
-                                    offset: Offset(0, 8),
-                                  ),
-                                ],
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: CachedNetworkImage(
-                                  imageUrl: 'https://image.tmdb.org/t/p/w500/${movie.posterPath}',
-                                  placeholder: (context, url) => CircularProgressIndicator(),
-                                  errorWidget: (context, url, error) => Icon(Icons.error),
-                                  width: 300,
-                                  height: 450,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 25),
                             Text(
-                              movie.title,
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                              tvx.popularity.toString(),
+                              style: TextStyle(fontSize: 18, color: Colors.white),
                             ),
-                            SizedBox(
-                              height: 25,
-                            ),
-                            Row(
-                              children: [
-                                Column(
-                                  children: [
-                                    Text(
-                                      movie.popularity.toString(),
-                                      style: TextStyle(fontSize: 18, color: Colors.white),
-                                    ),
-                                    SizedBox(height: 7),
-                                    Text('Popularity', style: TextStyle(color: Colors.white54))
-                                  ],
-                                ),
-                                SizedBox(width: 25),
-                                Column(
-                                  children: [
-                                    Text(
-                                      movie.voteCount.toString(),
-                                      style: TextStyle(fontSize: 18, color: Colors.white),
-                                    ),
-                                    SizedBox(height: 7),
-                                    Text('Vote Count', style: TextStyle(color: Colors.white54))
-                                  ],
-                                ),
-                                SizedBox(width: 25),
-                                Column(
-                                  children: [
-                                    Text(
-                                      movie.voteAverage.toString(),
-                                      style: TextStyle(fontSize: 18, color: Colors.white),
-                                    ),
-                                    SizedBox(height: 7),
-                                    Text('Vote Average', style: TextStyle(color: Colors.white54))
-                                  ],
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 20),
-                            OutlinedButton(
-                              onPressed: () {},
-                              child: Container(
-                                width: 250,
-                                child: Text(
-                                  'Read More',
-                                  style: TextStyle(color: Colors.white),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              style: OutlinedButton.styleFrom(
-                                side: BorderSide(color: Colors.white),
-                              ),
-                            )
+                            SizedBox(height: 7),
+                            Text('Popularity', style: TextStyle(color: Colors.white54))
                           ],
                         ),
-                      );
-                    },
-                    itemCount: movies.length,
-                    itemSize: 300,
-                    dynamicItemSize: true,
-                    onItemFocus: (int index) {},
-                  ),
-                ),
-              );
-            }
-          },
-        );
+                        SizedBox(width: 10),
+                        Column(
+                          children: [
+                            Text(
+                              tvx.voteCount.toString(),
+                              style: TextStyle(fontSize: 18, color: Colors.white),
+                            ),
+                            SizedBox(height: 7),
+                            Text('Vote Count', style: TextStyle(color: Colors.white54))
+                          ],
+                        ),
+                        SizedBox(width: 10),
+                        Column(
+                          children: [
+                            Text(
+                              tvx.voteAverage.toString(),
+                              style: TextStyle(fontSize: 18, color: Colors.white),
+                            ),
+                            SizedBox(height: 7),
+                            Text('Vote Average', style: TextStyle(color: Colors.white54))
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                    OutlinedButton(
+                      onPressed: () {},
+                      child: Container(
+                        width: 250,
+                        child: Text(
+                          'Read More',
+                          style: TextStyle(color: Colors.white),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      style: OutlinedButton.styleFrom(
+                        side: BorderSide(color: Colors.white),
+                      ),
+                    )
+                  ],
+                );
+              },
+            ),
+          );
+        }
       },
     );
   }

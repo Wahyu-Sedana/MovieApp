@@ -15,7 +15,7 @@ class TabBarWidget extends StatelessWidget implements PreferredSizeWidget {
       labelColor: Colors.white,
       unselectedLabelColor: Colors.white38,
       indicatorColor: Colors.white,
-      tabs: [Tab(text: 'Popular Movie'), Tab(text: 'Cinema'), Tab(text: 'Coming Soon')],
+      tabs: [Tab(text: 'Popular Movie'), Tab(text: 'Up Coming'), Tab(text: 'Top Rated Movie')],
     );
   }
 }

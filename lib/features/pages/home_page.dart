@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie_ui/features/pages/popular_page.dart';
+import 'package:movie_ui/features/pages/toprated_page.dart';
+import 'package:movie_ui/features/pages/tv_page.dart';
 import 'package:movie_ui/features/widgets/tab_widget.dart';
 import 'package:movie_ui/src/repositories/popular_repository.dart';
 
@@ -40,8 +42,8 @@ class HomePage extends StatelessWidget {
             child: TabBarView(
               children: [
                 PopularPage(),
-                Center(child: Text('Content of Recent Tab')),
-                Center(child: Text('Content of Top Rated Tab')),
+                TvPage(),
+                TopRatedPage(),
               ],
             ),
           ),

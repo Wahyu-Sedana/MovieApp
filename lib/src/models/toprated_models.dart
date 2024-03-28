@@ -1,4 +1,4 @@
-class TV {
+class TopRated {
   final int id;
   final String title;
   final String posterPath;
@@ -6,7 +6,7 @@ class TV {
   final int voteCount;
   final double voteAverage;
 
-  TV(
+  TopRated(
       {required this.id,
       required this.title,
       required this.posterPath,
@@ -14,8 +14,8 @@ class TV {
       required this.voteCount,
       required this.voteAverage});
 
-  factory TV.fromJson(Map<String, dynamic> json) {
-    return TV(
+  factory TopRated.fromJson(Map<String, dynamic> json) {
+    return TopRated(
         id: json['id'],
         title: json['title'],
         posterPath: json['poster_path'],
